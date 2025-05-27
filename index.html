@@ -1,0 +1,114 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Help Center</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+  <!-- Header -->
+  <header class="bg-white shadow-md p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Help Center</h1>
+    <nav>
+      <ul class="flex gap-4">
+        <li><a href="#" class="hover:underline">Home</a></li>
+        <li><a href="#faq" class="hover:underline">FAQs</a></li>
+        <li><a href="#contact" class="hover:underline">Contact</a></li>
+      </ul>
+    </nav>
+  </header>  <!-- Hero Section -->  <section class="text-center py-12 px-4">
+    <h2 class="text-3xl font-semibold mb-4">How can we help you?</h2>
+    <input id="searchInput" type="text" placeholder="Search for help..." class="w-full max-w-lg px-4 py-2 border rounded shadow-sm" oninput="searchFAQs()" />
+  </section>  <!-- FAQ Section -->  <section id="faq" class="px-4 py-10 max-w-4xl mx-auto">
+    <h3 class="text-2xl font-semibold mb-6">Frequently Asked Questions</h3>
+    <div id="faqList">
+      <!-- [FAQ items go here] -->
+    </div>
+  </section>  <!-- Contact Form -->  <section id="contact" class="px-4 py-10 max-w-2xl mx-auto">
+    <h3 class="text-2xl font-semibold mb-6">Contact Us</h3>
+    <form id="contactForm" class="bg-white p-6 rounded shadow space-y-4">
+      <input type="text" id="name" placeholder="Your Name" class="w-full px-4 py-2 border rounded" required />
+      <input type="email" id="email" placeholder="Your Email" class="w-full px-4 py-2 border rounded" required />
+      <input type="text" id="subject" placeholder="Subject" class="w-full px-4 py-2 border rounded" />
+      <textarea id="message" placeholder="Your Message" class="w-full px-4 py-2 border rounded" rows="4" required></textarea>
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Send Message</button>
+    </form>
+    <p id="formSuccess" class="text-green-600 mt-4 hidden">Thanks for reaching out! We'll get back to you shortly.</p>
+  </section>  <!-- Live Chat -->  <div class="fixed bottom-6 right-6">
+    <button id="chatToggle" class="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700">Chat</button>
+    <div id="chatBox" class="hidden w-80 bg-white shadow-lg rounded-lg p-4 mt-2">
+      <div class="h-48 overflow-y-auto border-b mb-2" id="chatMessages">
+        <p class="text-sm text-gray-600">Agent: Hi! How can I help you today?</p>
+      </div>
+      <div class="flex gap-2">
+        <input type="text" id="chatInput" placeholder="Type your message..." class="flex-1 px-2 py-1 border rounded text-sm" />
+        <button onclick="sendChatMessage()" class="bg-blue-600 text-white px-3 rounded text-sm hover:bg-blue-700">Send</button>
+      </div>
+    </div>
+  </div>  <!-- Footer -->  <footer class="text-center py-6 text-sm text-gray-500">
+    &copy; 2025 Help Center. All rights reserved.
+  </footer>  <!-- JS -->  <script>
+    function toggleAnswer(id) {
+      const content = document.getElementById(id);
+      const icon = document.getElementById('icon-' + id);
+      content.classList.toggle('hidden');
+      icon.textContent = content.classList.contains('hidden') ? '+' : '−';
+    }
+
+    function searchFAQs() {
+      const query = document.getElementById('searchInput').value.toLowerCase();
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('button span:first-child').textContent.toLowerCase();
+        const answer = item.querySelector('.faq-content').textContent.toLowerCase();
+        item.style.display = (question.includes(query) || answer.includes(query)) ? 'block' : 'none';
+      });
+    }
+
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      if (!name || !email || !message) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      document.getElementById("formSuccess").classList.remove("hidden");
+      document.getElementById("contactForm").reset();
+    });
+
+    // Chat Toggle Logic
+    document.getElementById("chatToggle").addEventListener("click", function () {
+      const chatBox = document.getElementById("chatBox");
+      chatBox.classList.toggle("hidden");
+    });
+
+    function sendChatMessage() {
+      const input = document.getElementById("chatInput");
+      const message = input.value.trim();
+      if (!message) return;
+      const chat = document.getElementById("chatMessages");
+      const userMessage = document.createElement("p");
+      userMessage.className = "text-sm text-blue-600";
+      userMessage.textContent = "You: " + message;
+      chat.appendChild(userMessage);
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
+
+      // Mock reply
+      setTimeout(() => {
+        const agentReply = document.createElement("p");
+        agentReply.className = "text-sm text-gray-600";
+        agentReply.textContent = "Agent: We'll get back to you shortly.";
+        chat.appendChild(agentReply);
+        chat.scrollTop = chat.scrollHeight;
+      }, 1000);
+    }
+  </script></body>
+  </html>
