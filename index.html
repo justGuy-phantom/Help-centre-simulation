@@ -22,54 +22,6 @@
   </header>  <!-- Hero Section -->  <section class="text-center py-12 px-4">
     <h2 class="text-3xl font-semibold mb-4">How can we help you?</h2>
     <input id="searchInput" type="text" placeholder="Search for help..." class="w-full max-w-lg px-4 py-2 border rounded shadow-sm" oninput="searchFAQs()" />
-     //Your existing FAQ items with links
-const faqItems = [{ question: "why am I having wallet sync issues?", link:"https://justguy-phantom.github.io/Help-centre-simulation/Wallet sync.html" },{ question: "why is my account verification constantly failing?", link:"https://justguy-phantom.github.io/Help-centre-simulation/Account verification.html" },{ question: "why is there delay in my transaction", link:"https://justguy-phantom.github.io/Help-centre-simulation/Transactions.html" },
-  { question: "what are sensitive I formations?", link: "https://justguy-phantom.github.io/Help-centre-simulation/sensitive information.html" }
-];
-
-// Create suggestion box
-const searchInput = document.getElementById('searchInput');
-const suggestionBox = document.createElement('ul');
-suggestionBox.style.position = 'absolute';
-suggestionBox.style.backgroundColor = 'white';
-suggestionBox.style.border = '1px solid #ccc';
-suggestionBox.style.width = searchInput.offsetWidth + 'px';
-suggestionBox.style.listStyle = 'none';
-suggestionBox.style.padding = '0';
-suggestionBox.style.marginTop = '0';
-suggestionBox.style.maxHeight = '150px';
-suggestionBox.style.overflowY = 'auto';
-suggestionBox.style.zIndex = '1000';
-suggestionBox.style.cursor = 'pointer';
-
-// Append suggestion box right under the input
-searchInput.parentNode.style.position = 'relative';
-searchInput.parentNode.appendChild(suggestionBox);
-
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.toLowerCase();
-  suggestionBox.innerHTML = '';
-  if (!query) return;
-  const matches = faqItems.filter(item => item.question.toLowerCase().includes(query));
-  matches.forEach(item => {
-    const li = document.createElement('li');
-    li.style.padding = '8px';
-    li.textContent = item.question;
-    li.onclick = () => {
-      window.open(item.link, '_blank');  // Opens the article in a new tab
-      suggestionBox.innerHTML = '';
-      searchInput.value = '';
-    };
-    suggestionBox.appendChild(li);
-  });
-});
-
-// Optional: close suggestions if user clicks outside
-document.addEventListener('click', (e) => {
-  if (!searchInput.contains(e.target) && !suggestionBox.contains(e.target)) {
-    suggestionBox.innerHTML = '';
-  }
-});
   </section>  <!-- FAQ Section -->  <section id="faq" class="px-4 py-10 max-w-4xl mx-auto">
     <h3 class="text-2xl font-semibold mb-6">Frequently Asked Questions</h3>
     <div id="faqList" class="space-y-4">
@@ -189,5 +141,56 @@ document.addEventListener('click', (e) => {
         chat.scrollTop = chat.scrollHeight;
       }, 1000);
     }
-  </script></body>
+  </script>
+<script>
+   //Your existing FAQ items with links
+const faqItems = [{ question: "why am I having wallet sync issues?", link:"https://justguy-phantom.github.io/Help-centre-simulation/Wallet sync.html" },{ question: "why is my account verification constantly failing?", link:"https://justguy-phantom.github.io/Help-centre-simulation/Account verification.html" },{ question: "why is there delay in my transaction", link:"https://justguy-phantom.github.io/Help-centre-simulation/Transactions.html" },
+  { question: "what are sensitive I formations?", link: "https://justguy-phantom.github.io/Help-centre-simulation/sensitive information.html" }
+];
+
+// Create suggestion box
+const searchInput = document.getElementById('searchInput');
+const suggestionBox = document.createElement('ul');
+suggestionBox.style.position = 'absolute';
+suggestionBox.style.backgroundColor = 'white';
+suggestionBox.style.border = '1px solid #ccc';
+suggestionBox.style.width = searchInput.offsetWidth + 'px';
+suggestionBox.style.listStyle = 'none';
+suggestionBox.style.padding = '0';
+suggestionBox.style.marginTop = '0';
+suggestionBox.style.maxHeight = '150px';
+suggestionBox.style.overflowY = 'auto';
+suggestionBox.style.zIndex = '1000';
+suggestionBox.style.cursor = 'pointer';
+
+// Append suggestion box right under the input
+searchInput.parentNode.style.position = 'relative';
+searchInput.parentNode.appendChild(suggestionBox);
+
+searchInput.addEventListener('input', () => {
+  const query = searchInput.value.toLowerCase();
+  suggestionBox.innerHTML = '';
+  if (!query) return;
+  const matches = faqItems.filter(item => item.question.toLowerCase().includes(query));
+  matches.forEach(item => {
+    const li = document.createElement('li');
+    li.style.padding = '8px';
+    li.textContent = item.question;
+    li.onclick = () => {
+      window.open(item.link, '_blank');  // Opens the article in a new tab
+      suggestionBox.innerHTML = '';
+      searchInput.value = '';
+    };
+    suggestionBox.appendChild(li);
+  });
+});
+
+// Optional: close suggestions if user clicks outside
+document.addEventListener('click', (e) => {
+  if (!searchInput.contains(e.target) && !suggestionBox.contains(e.target)) {
+    suggestionBox.innerHTML = '';
+  }
+});
+</script>
+</body>
   </html>
